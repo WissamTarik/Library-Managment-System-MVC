@@ -1,0 +1,34 @@
+﻿@model AuthorDto
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Add New Author</h1>
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-6">
+            <div class="card shadow-lg border-0 rounded-3">
+                <div class="card-header bg-dark text-white text-center">
+                    <h4>Add New Book</h4>
+                </div>
+                <div class="card-body">
+                  <form asp-action="Create" enctype="multipart/form-data">
+
+                        <partial name="AuthorPartialView/CreateAndEditPartialView" />
+                      
+                            <div class="d-grid">
+                                <button type="submit" class="btn btn-success">Add</button>
+                                <a asp-action="Index" class="btn btn-outline-secondary mt-2">Return to Author List</a>
+                          
+                        </div>
+                  </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Validation {
+    <partial name="_ValidationScriptsPartial" />
+}
+

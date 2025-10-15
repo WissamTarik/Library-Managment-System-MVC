@@ -1,0 +1,23 @@
+﻿@model AuthorDto
+
+<div class="mb-3 form-floating">
+    <input class="form-control" asp-for="Name" placeholder="Author Name.." />
+    <label class="form-label" asp-for="Name">Author Name</label>
+    <span class="text-danger" asp-validation-for="Name"></span>
+
+</div>
+<div class="mb-3 form-floating">
+    <textarea asp-for="Bio" class="form-control" placeholder="Author Bio..."></textarea>
+    <label class="form-label" asp-for="Bio">Author Bio</label>
+    <span class="text-danger" asp-validation-for="Bio"></span>
+</div>
+<div class="mb-3 form-floating">
+    <input class="form-control" asp-for="DOB" placeholder="Author DOB.." />
+    <label class="form-label" asp-for="DOB">Author DOB</label>
+    <span class="text-danger" asp-validation-for="DOB"></span>
+</div>
+
+<div class="mb-3">
+    <label class="form-label" asp-for="Image">Author Image</label>
+    <input class="form-control" asp-for="Image" placeholder="Author Image " />
+</div>

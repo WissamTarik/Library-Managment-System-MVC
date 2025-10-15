@@ -1,0 +1,48 @@
+﻿@model RoleToReturnDto
+@{
+    ViewData["Title"] = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-6">
+            <div class="card shadow-lg border-0 rounded-3">
+                <div class="card-header bg-dark text-white text-center">
+                    <h4> Edit role @Model.Name</h4>
+                </div>
+                <div class="card-body">
+                    <form asp-action="Edit">
+                        <div class="mb-3 form-floating">
+                            <input class="form-control" asp-for="Id" placeholder="Id" readonly />
+                            <label asp-for="Id"></label>
+                        </div>
+
+                        <div class="mb-3 form-floating">
+                            <input class="form-control" asp-for="Name" placeholder="Name" />
+                            <label asp-for="Name"></label>
+                        </div>
+
+
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-success" asp-action="Edit">
+                                <i class="fas fa-save me-3"></i> Save
+                            </button>
+                            <a  class="btn btn-warning mt-2" asp-action="AddOrRemoveUsers" asp-route-roleId="@Model.Id">
+                                <i class="fas fa-pen-alt me-3"></i> Add Or Remove Users
+                            </a>
+                            <a asp-action="Index" class="btn btn-outline-secondary mt-2">Return to roles List</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Validation {
+    <partial name="_ValidationScriptsPartial" />
+}
+
+

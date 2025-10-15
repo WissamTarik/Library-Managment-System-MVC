@@ -2,7 +2,88 @@
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="container mt-5 mb-3">
+    <!-- Hero Section -->
+    <div class="text-center mb-5">
+        <h1 class="fw-bold display-5 text-dark">📚 Welcome to <span class="text-primary">Library System</span></h1>
+        <p class="text-muted fs-5">Manage your books, categories, and users with ease</p>
+        <a asp-controller="Book" asp-action="Index" class="btn btn-primary btn-lg mt-3 shadow-sm">
+            Explore Books
+        </a>
+    </div>
+
+    <!-- Cards Section -->
+    <div class="row g-4">
+        <!-- Books -->
+        <div class="col-md-4 col-sm-6">
+            <div class="card shadow-lg border-0 h-100 text-center p-3 hover-card">
+                <div class="card-body">
+                    <i class="fa-solid fa-book-open fs-1 text-primary mb-3"></i>
+                    <h5 class="card-title fw-bold">Books</h5>
+                    <p class="card-text text-muted">View, add, or manage all library books in one place.</p>
+                    <a asp-controller="Book" asp-action="Index" class="btn btn-outline-primary">Go to Books</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Categories -->
+        <div class="col-md-4 col-sm-6">
+            <div class="card shadow-lg border-0 h-100 text-center p-3 hover-card">
+                <div class="card-body">
+                    <i class="fa-solid fa-tags fs-1 text-success mb-3"></i>
+                    <h5 class="card-title fw-bold">Categories</h5>
+                    <p class="card-text text-muted">Organize books by category for easy browsing.</p>
+                    <a asp-controller="Category" asp-action="Index" class="btn btn-outline-success">Go to Categories</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Roles -->
+        <div class="col-md-4 col-sm-6">
+            <div class="card shadow-lg border-0 h-100 text-center p-3 hover-card">
+                <div class="card-body">
+                    <i class="fa-solid fa-user-shield fs-1 text-danger mb-3"></i>
+                    <h5 class="card-title fw-bold">Roles</h5>
+                    <p class="card-text text-muted">Manage user permissions and access levels.</p>
+                    <a asp-controller="Role" asp-action="Index" class="btn btn-outline-danger">Go to Roles</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Users -->
+        <div class="col-md-4 col-sm-6">
+            <div class="card shadow-lg border-0 h-100 text-center p-3 hover-card">
+                <div class="card-body">
+                    <i class="fa-solid fa-users fs-1 text-warning mb-3"></i>
+                    <h5 class="card-title fw-bold">Users</h5>
+                    <p class="card-text text-muted">View and manage user accounts efficiently.</p>
+                    <a asp-controller="User" asp-action="Index" class="btn btn-outline-warning">Go to Users</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Reports -->
+        <div class="col-md-4 col-sm-6">
+            <div class="card shadow-lg border-0 h-100 text-center p-3 hover-card">
+                <div class="card-body">
+                    <i class="fa-solid fa-chart-line fs-1 text-info mb-3"></i>
+                    <h5 class="card-title fw-bold">Reports</h5>
+                    <p class="card-text text-muted">Generate insightful reports and statistics.</p>
+                    <a asp-controller="Report" asp-action="Index" class="btn btn-outline-info">View Reports</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- About -->
+        <div class="col-md-4 col-sm-6">
+            <div class="card shadow-lg border-0 h-100 text-center p-3 hover-card">
+                <div class="card-body">
+                    <i class="fa-solid fa-circle-info fs-1 text-secondary mb-3"></i>
+                    <h5 class="card-title fw-bold">About</h5>
+                    <p class="card-text text-muted">Learn more about our library management system.</p>
+                    <a asp-controller="Home" asp-action="About" class="btn btn-outline-secondary">Learn More</a>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

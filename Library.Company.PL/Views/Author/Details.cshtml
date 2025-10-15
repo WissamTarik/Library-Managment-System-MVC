@@ -1,0 +1,74 @@
+﻿@model AuthorDto
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>@Model.Name Details</h1>
+
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-6">
+            <div class="card shadow-lg border-0 rounded-3">
+                <div class="card-header bg-dark text-white text-center justify-content-center d-flex g-2 align-items-center">
+                    <h4>@Model.Name Details</h4>
+                    @if(Model.ImageName is not null)
+                    {
+                        <img src="~/files/images/@Model.ImageName" alt="@Model.Name"  width="80px" class="rounded-circle ms-3"/>
+                    }
+                </div>
+                <div class="card-body">
+
+
+
+                    <partial name="AuthorPartialView/DetailsAndDeletePartialView" />
+                    <div class="d-grid mb-2">
+                        <a class="btn btn-warning" asp-route-id="@ViewBag.Id" asp-action="Edit">
+                            Edit
+                            <i class="fas fa-pen-alt ms-2"></i>
+
+                        </a>
+                        <a asp-action="Index" class="btn btn-outline-secondary mt-2">
+                            Return to Author List
+
+                            <i class="fas fa-arrow-right ms-2"></i>
+                        </a>
+                    </div>
+                    @if (Model.Books?.Count() > 0)
+                    {
+                        <table class=" text-center table table-info table-hover table-striped table-responsive table-bordered">
+                            <thead class="table-light text-center">
+                                <tr>
+                                    <th>ISBN</th>
+                                    <th>Title</th>
+                                    <th>PublishedYear</th>
+
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model.Books)
+                                {
+                                    <tr>
+                                        <td>@item.ISBN</td>
+                                        <td>@item.Title</td>
+                                        <td>@item.PublishedYear</td>
+
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    }
+    
+                
+                
+                
+                </div>
+            </div>
+        </div>
+    </div>
+
+ 
+</div>
+
+

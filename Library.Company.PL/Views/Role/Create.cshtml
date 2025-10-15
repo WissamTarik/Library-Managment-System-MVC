@@ -1,0 +1,39 @@
+﻿@model RoleToReturnDto
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-6">
+            <div class="card shadow-lg border-0 rounded-3">
+                <div class="card-header bg-dark text-white text-center">
+                    <h4>Add New Role</h4>
+                </div>
+                <div class="card-body">
+                    <form asp-action="Create">
+
+
+
+                        <div class="mb-3 form-floating">
+                            <input class="form-control" asp-for="Name" placeholder="" />
+                            <label class="form-label" asp-for="Name"></label>
+                            <span asp-validation-for="Name" class="text-danger"></span>
+
+                        </div>
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-success">Add</button>
+                            <a asp-action="Index" class="btn btn-outline-secondary mt-2">Return to role List</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Validation {
+    <partial name="_ValidationScriptsPartial" />
+}
+

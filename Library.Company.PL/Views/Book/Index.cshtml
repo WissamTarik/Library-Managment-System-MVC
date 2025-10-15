@@ -1,75 +1,97 @@
 ﻿@model IEnumerable<Book>
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Books";
 }
 
-
-<div class="w-75 mx-auto">
-<h1>Books</h1>
-    <div class="my-5 row  g-3">
-        <form class="d-flex align-items-center col-9">
-            <input type="search" class="form-control w-50 " placeholder="Search by name..." />
-            <button class="btn btn-secondary py-2 ">Search</button>
-        </form>
-       <a class="btn btn-primary text-capitalize col-3 py-2" asp-action="Create"> 
-           <i class="fas fa-plus"></i>
-            add new book
-       </a>
+<div class="container my-5">
+    <!-- Page Header -->
+    <div class="text-center mb-4">
+        <h1 class="fw-bold">
+            <i class="fas fa-book-atlas me-2 text-success"></i>Books
+        </h1>
     </div>
-     <div>
-        @if (Model.Count() > 0)
-        {
-             <table class=" text-center table table-dark table-hover table-striped table-responsive table-bordered">
-                 <thead class="table-light text-center">
-                     <tr>
-                         <th >@Html.DisplayNameFor(b=>b.ISBN)</th>
-                         <th >@Html.DisplayNameFor(b=>b.Title)</th>
-                         <th >@Html.DisplayNameFor(b=>b.PublishedYear)</th>
-                         <th>Details</th>
-                         <th>Edit</th>
-                         <th>Delete</th>
-                    
-                     </tr>                 
-                     </thead>
-                 <tbody>
-                    @foreach(var item in Model)
+    <div class="row mb-3 align-items-center g-2">
+        <!-- Search -->
+        <div class="col-12 col-md-8">
+            <form asp-action="Index" class="d-flex">
+                <div class="input-group w-75">
+                    <input type="search" name="SearchInput" class="form-control" placeholder="Search by name..."  />
+                    <button class="btn btn-secondary" type="submit">
+                        <i class="fas fa-search me-1"></i> Search
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        <!-- Add button -->
+        <div class="col-12 col-md-4 text-start text-md-end">
+            <a class="btn btn-primary w-75 w-md-auto" asp-action="Create">
+                <i class="fas fa-plus me-1"></i> Add new book
+            </a>
+        </div>
+    </div>
+
+    <!-- Alert -->
+    @if (!string.IsNullOrEmpty(TempData["Message"] as string))
+    {
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <i class="fa-solid fa-circle-check me-2"></i> @TempData["Message"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+    }
+
+    <!-- Table or empty state -->
+    @if (Model.Any())
+    {
+        <div class="table-responsive shadow-sm rounded-3">
+            <table class="table table-striped table-hover align-middle mb-0">
+                <thead class="table-light">
+                    <tr>
+                        <th>ISBN</th>
+                        <th>Title</th>
+                        <th>Year</th>
+                        <th>Author</th>
+                        <th>Category</th>
+                        <th>Details</th>
+                        <th>Edit</th>
+                        <th>Delete</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
                     {
                         <tr>
-                            <td>@item.ISBN</td>
-                            <td>@item.Title</td>
-                            <td>@item.PublishedYear</td>
-                            <td>
-                                <a class="btn btn-success" asp-action="Details" asp-route-id="@item.Id">Details</a>
+                            <td data-label="ISBN" class="text-truncate" style="max-width:120px;">@item.ISBN</td>
+                            <td data-label="Title" class="text-truncate" style="max-width:220px;">
+                                <div class="d-inline-block text-truncate" style="max-width:220px;">@item.Title</div>
                             </td>
-                            <td>
+                            <td data-label="Year">@item.PublishedYear</td>
+                            <td data-label="Author" class="text-truncate" style="max-width:160px;">
+                                @(string.IsNullOrEmpty(item?.Author?.Name) ? "N/A" : item.Author.Name)
+                            </td>
+                            <td data-label="Category" class="text-truncate" style="max-width:160px;">
+                                @(string.IsNullOrEmpty(item?.Category?.Name) ? "N/A" : item.Category.Name)
+                            </td>
 
-                                <a class="btn btn-light" asp-action="Edit" asp-route-id="@item.Id">Edit</a>
-                            </td>
-                            <td>
-
-                                <a class="btn btn-danger" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-                            </td>
+                            @* partial should output <td> cells for details/edit/delete.
+                               If your partial returns buttons only, wrap them in <td> here instead. *@
+                            <partial name="PartialBtnView" model="@item.Id.ToString()" />
                         </tr>
                     }
                 </tbody>
-             </table>
-        }
-        else
-        {
-            <div class="card  shadow py-5 shadow-lg border-primary-subtle">
-                <div class="card-body text-center">
-
-                    <i class="fas fa-book-open  bookIcon  text-primary"></i>
-                    <p class="text-muted mt-3 ">No books available</p>
-                    <a class="btn btn-primary text-capitalize col-6 mt-2 py-2" asp-action="Create">
-                        <i class="fas fa-plus"></i>
-                        add new book
-                    </a>
-                </div>
+            </table>
+        </div>
+    }
+    else
+    {
+        <div class="card shadow-lg border-0 text-center py-5 mx-0">
+            <div class="card-body">
+                <i class="fas fa-book-open text-primary mb-3" style="font-size: 3rem;"></i>
+                <p class="text-muted mb-3 fs-6">No books available</p>
+                <a class="btn btn-primary text-capitalize px-4 py-2" asp-action="Create">
+                    <i class="fas fa-plus me-1"></i> Add new book
+                </a>
             </div>
-        }
-
-     </div>
+        </div>
+    }
 </div>
-
-

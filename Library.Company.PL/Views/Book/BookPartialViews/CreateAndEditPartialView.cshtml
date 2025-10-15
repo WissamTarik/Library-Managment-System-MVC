@@ -1,0 +1,37 @@
+﻿@model BookDto
+@inject IAuthorRepository _AuthorRepository;
+@inject ICategoryRepository _categoryRepository
+@{
+    var Authors = new SelectList(await _AuthorRepository.GetAllAsync() as IEnumerable<Author>, "Id", "Name");
+
+    var Categories = new SelectList( await _categoryRepository.GetAllAsync() as IEnumerable<Category>, "Id", "Name");
+
+}
+<div class="mb-3 form-floating">
+    <input class="form-control" asp-for="ISBN" placeholder="" />
+    <label class="form-label" asp-for="ISBN"></label>
+    <span asp-validation-for="ISBN" class="text-danger"></span>
+
+</div>
+
+<div class="mb-3 form-floating">
+    <input class="form-control" asp-for="Title" placeholder="" />
+    <label asp-for="Title" class="form-label"></label>
+    <span asp-validation-for="Title" class="text-danger"></span>
+</div>
+
+<div class="mb-3 form-floating">
+    <input class="form-control" asp-for="PublishedYear" placeholder="" />
+    <label asp-for="PublishedYear" class="form-label"></label>
+    <span asp-validation-for="PublishedYear" class="text-danger"></span>
+</div>
+<div class="mb-3">
+    <select asp-items="@Authors" asp-for="AuthorId" class="form-select" >
+        <option value="@null">--Select Author--</option>
+    </select>
+</div>
+<div class="mb-3">
+    <select asp-items="@Categories" asp-for="CategoryId" class="form-select">
+        <option value="@null">--Select--Category</option>
+    </select>
+</div>

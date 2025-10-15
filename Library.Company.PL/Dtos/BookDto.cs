@@ -11,5 +11,11 @@ namespace Library.Company.PL.Dtos
         [Range(1500, 2025, ErrorMessage = "Publish year must be between 1500 and 2025")]
         [DisplayName("Published Year")]
         public int PublishedYear { get; set; }
+        public string? AuthorName { get; set; }
+        public int? AuthorId { get; set; }
+
+        public string? CategoryName { get; set; }
+        public int? CategoryId { get; set; }
+
     }
 }

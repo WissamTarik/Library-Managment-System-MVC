@@ -1,0 +1,40 @@
+﻿@model AuthorDto
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-6">
+            <div class="card shadow-lg border-0 rounded-3">
+                <div class="card-header bg-dark text-white text-center d-flex justify-content-center align-items-center">
+                    <h4>Edit Author @Model.Name</h4>
+                        @if(Model.ImageName is not null)
+                        {
+                            <img src="~/files/images/@Model.ImageName" class="rounded-circle ms-3" width="80px"/>
+                        }
+                </div>
+                <div class="card-body">
+                    <form asp-action="Edit" enctype="multipart/form-data" >
+                        <input hidden asp-for="@Model.ImageName"/>
+                        <partial name="AuthorPartialView/CreateAndEditPartialView" />
+
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-warning">Edit 
+                                <i class="fas fa-pen-alt ms-2"></i>
+                            </button>
+                            <a asp-action="Index" class="btn btn-outline-secondary mt-2">Return to Author List</a>
+
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Validation {
+    <partial name="_ValidationScriptsPartial" />
+}
+
+

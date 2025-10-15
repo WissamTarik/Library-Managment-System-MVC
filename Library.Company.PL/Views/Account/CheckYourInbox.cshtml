@@ -1,0 +1,31 @@
+﻿@{
+    ViewData["Title"] = "Check Inbox";
+    Layout = "~/Views/Shared/_AuthLayout.cshtml";
+}
+
+<div class="container d-flex justify-content-center align-items-center min-vh-100">
+    <div class="card shadow-lg p-4 border-0 rounded-4 text-center" style="max-width: 420px; width: 100%;">
+        <div class="auth-header mb-4">
+            <i class="fa-solid fa-envelope-circle-check text-success mb-3" style="font-size: 3rem;"></i>
+            <h3 class="fw-bold">Check Your Inbox</h3>
+        </div>
+
+        <p class="mb-3">
+            We’ve sent a password reset link to your email address.
+            Please check your inbox and follow the instructions to reset your password.
+        </p>
+
+        <p class="text-muted small mb-4">
+            Didn’t receive the email? Check your spam folder or try again below.
+        </p>
+
+        <div class="d-grid gap-2 mb-3">
+            <a asp-action="ForgetPassword" asp-controller="Account" class="btn btn-outline-success btn-lg shadow-sm">
+                <i class="fa-solid fa-paper-plane me-2"></i> Resend Email
+            </a>
+            <a asp-action="SignIn" asp-controller="Account" class="btn btn-success btn-lg shadow-sm">
+                <i class="fa-solid fa-right-to-bracket me-2"></i> Back to Sign In
+            </a>
+        </div>
+    </div>
+</div>

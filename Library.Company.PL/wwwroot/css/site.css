@@ -20,6 +20,20 @@ html {
 body {
   margin-bottom: 60px;
 }
+
+
+.navbar,
+footer {
+    transition: all 0.3s ease;
+}
+.navbar-brand {
+    font-size: 1.2rem;
+}
+
+.nav-link {
+    text-align: center;
+    padding: 0.75rem 0;
+}
 nav .navbar-toggler {
  
     border: 1px solid rgba(255,255,255,0.5);
@@ -30,7 +44,11 @@ nav .navbar-toggler:focus {
     outline: 0;
     box-shadow: 0 0 0 .25rem white;
 }
-
+.logout-btn {
+    border-radius: 20px;
+    font-size: 0.9rem;
+    padding: 6px 16px;
+}
 input[type="search"].form-control {
     border-end-end-radius: 0;
     border-start-end-radius: 0;
@@ -39,6 +57,66 @@ input[type="search"].form-control  + button {
     border-end-start-radius: 0;
     border-start-start-radius: 0;
 }
+
 i.bookIcon{
     font-size:80px;
+}
+@media (max-width: 576px) {
+    h1 {
+        font-size: 1.6rem;
+    }
+
+    .btn {
+        font-size: 0.9rem;
+        padding: 0.6rem;
+    }
+
+    table th, table td {
+        font-size: 0.85rem;
+    }
+    .card {
+        margin: 0 1rem;
+    }
+
+    h4 {
+        font-size: 1.25rem;
+    }
+
+    .form-floating > label {
+        font-size: 0.9rem;
+    }
+    .form-check-label {
+        font-size: 0.9rem;
+    }
+    .input-group input {
+        font-size: 0.9rem;
+        padding: 0.6rem;
+    }
+}
+
+
+.hover-card {
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    border-radius: 1rem;
+}
+
+ .hover-card:hover {
+        transform: translateY(-5px);
+    }
+
+@media (max-width: 576px) {
+    h1.display-5 {
+        font-size: 1.75rem;
+    }
+
+    .card-body p {
+        font-size: 0.9rem;
+    }
+}
+footer.footer {
+    background-color: #212529;
+    color: #adb5bd;
+    font-size: 0.9rem;
+    padding: 10px 0;
+    text-align: center;
 }

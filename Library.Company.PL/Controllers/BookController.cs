@@ -1,21 +1,37 @@
-﻿using Library.Company.BLL.Interfaces;
+﻿using AutoMapper;
+using Library.Company.BLL.Interfaces;
 using Library.Company.DAL.Models;
 using Library.Company.PL.Dtos;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
 
 namespace Library.Company.PL.Controllers
 {
+    [Authorize]
     public class BookController : Controller
     {
-        private readonly IBookRepository _bookRepository;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public BookController(IBookRepository bookRepository)
+        private readonly IMapper _mapper;
+
+        public BookController(IUnitOfWork unitOfWork, IMapper mapper)
         {
-           _bookRepository = bookRepository;
+            this._unitOfWork = unitOfWork;
+            _mapper = mapper;
         }
-        public IActionResult Index()
+        public async Task<IActionResult> Index(string ?SearchInput)
         {
-            var Books = _bookRepository.GetAll();
+            IEnumerable<Book> Books;
+            if (string.IsNullOrEmpty(SearchInput))
+            {
+
+             Books = await _unitOfWork.BookRepository.GetAllAsync();
+            }
+            else
+            {
+                Books = await _unitOfWork.BookRepository.GetByNameAsync(SearchInput);
+            }
             return View(Books);
         }
         [HttpGet]
@@ -25,19 +41,20 @@ namespace Library.Company.PL.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create(BookDto model)
+        public async Task<IActionResult> Create(BookDto model)
         {
             if (ModelState.IsValid)
             {
-                var Book = new Book()
-                {
-                    ISBN = model.ISBN,
-                    Title = model.Title,
-                    PublishedYear = model.PublishedYear
-                };
-               int Count= _bookRepository.Add(Book);
+                var Book = _mapper.Map<Book>(model);
+                Book.AuthorId = model.AuthorId;
+                Book.Author = null;
+
+                Book.Category = null;
+             await  _unitOfWork.BookRepository.AddAsync(Book);
+                int Count =await _unitOfWork.CompleteAsync();
                 if (Count > 0)
                 {
+                    TempData["Message"] = $"{model.Title} is added successfully";
                     return RedirectToAction(nameof(Index));
                 }
 
@@ -45,19 +62,24 @@ namespace Library.Company.PL.Controllers
             return View(model);
         }
         [HttpGet]
-        public IActionResult Details([FromRoute] int ? id)
+        public async Task<IActionResult> Details([FromRoute] int ? id,string ViewName="Details")
         {
             if (id is null) return BadRequest("Invalid id");
-            var Book = _bookRepository.GetById(id.Value);
+            var Book = await _unitOfWork.BookRepository.GetByIdAsync(id.Value);
             if (Book != null) {
-                //var bookDto = new BookDto()
-                //{
-                //    ISBN = Book.ISBN,
-                //    Title = Book.Title,
-                //    PublishedYear = Book.PublishedYear
-                //};
-                return View(Book);
-             
+                if (ViewName != "Details")
+                {
+
+                    var bookDtos = _mapper.Map<BookDto>(Book);
+                    return View(ViewName, bookDtos);
+                }
+                else
+                {
+
+                    return View(ViewName, Book);
+
+                }
+
             }
             return NotFound(new
             {
@@ -68,45 +90,28 @@ namespace Library.Company.PL.Controllers
         }
 
         [HttpGet]
-        public IActionResult Edit([FromRoute] int? id)
+        public async Task<IActionResult> Edit([FromRoute] int? id)
         {
-            if (id is null) return BadRequest("Invalid id");
-            var Book = _bookRepository.GetById(id.Value);
-            if (Book != null)
-            {
-
-                var bookDtos = new BookDto()
-                {
-                    ISBN = Book.ISBN,
-                    Title = Book.Title,
-                    PublishedYear = Book.PublishedYear
-                };
-                return View(bookDtos);
-            }
-            return NotFound(new
-            {
-                StatusCode = 404,
-                message = "Not found"
-            });
+           return  await Details(id,"Edit");
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit([FromRoute] int ?id,BookDto bookDto)
+        public async Task<IActionResult> Edit([FromRoute] int ?id,BookDto bookDto)
         {
             if (id is null) return BadRequest("Invalid id");
             if (ModelState.IsValid)
             {
-                var Book = new Book()
-                {
-                    Id = id.Value,
-                    ISBN = bookDto.ISBN,
-                    Title = bookDto.Title,
-                    PublishedYear = bookDto.PublishedYear
 
-                };
-                int Count=_bookRepository.Update(Book);
+                var Book = _mapper.Map<Book>(bookDto);
+                Book.AuthorId = bookDto.AuthorId;
+                Book.Author = null;
+                Book.Category = null;
+                Book.Id = id.Value;
+                _unitOfWork.BookRepository.Update(Book);
+                int Count = await _unitOfWork.CompleteAsync();
                 if (Count > 0)
                 {
+                    TempData["Message"] = $"{bookDto.Title} is updated";
                     return RedirectToAction("Index");
                 }
 
@@ -114,16 +119,18 @@ namespace Library.Company.PL.Controllers
             return View(bookDto);
         }
     
-       public IActionResult Delete([FromRoute] int ? id )
+       public async Task<IActionResult> Delete([FromRoute] int ? id )
         {
             if (id is null) return BadRequest("Invalid id");
 
-            var Book = _bookRepository.GetById(id.Value);
-            if(Book is not null)
+            var Book =await _unitOfWork.BookRepository.GetByIdAsync(id.Value);
+            if (Book is not null)
             {
-              int Count=  _bookRepository.Delete(Book);
+               _unitOfWork.BookRepository.Delete(Book);
+                int Count = await _unitOfWork.CompleteAsync();
                 if (Count > 0)
                 {
+                    TempData["Message"] = $"{Book.Title} is deleted";
                     return RedirectToAction("Index");
                 }
             }

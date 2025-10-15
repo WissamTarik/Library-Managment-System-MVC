@@ -1,0 +1,92 @@
+﻿@model IEnumerable<RoleToReturnDto>
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="container my-5">
+    <!-- Page Header -->
+    <div class="text-center mb-4">
+        <h1 class="fw-bold">
+            <i class="fas fa-user-shield me-2 text-success"></i>Roles
+        </h1>
+    </div>
+    <div class="row mb-3 align-items-center g-2">
+        <!-- Search -->
+        <div class="col-12 col-md-8">
+            <form asp-action="Index" class="d-flex">
+                <div class="input-group w-75">
+                    <input type="search" name="SearchInput" class="form-control" placeholder="Search by name..." />
+                    <button class="btn btn-secondary" type="submit">
+                        <i class="fas fa-search me-1"></i> Search
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        <!-- Add button -->
+        <div class="col-12 col-md-4 text-start text-md-end">
+            <a class="btn btn-primary w-75 w-md-auto" asp-action="Create">
+                <i class="fas fa-plus me-1"></i> Add new role
+            </a>
+        </div>
+    </div>
+
+    <!-- Alert -->
+    @if (!string.IsNullOrEmpty(TempData["Message"] as string))
+    {
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <i class="fa-solid fa-circle-check me-2"></i> @TempData["Message"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+    }
+
+    <!-- Table or empty state -->
+    @if (Model.Any())
+    {
+        <div class="table-responsive shadow-sm rounded-3">
+            <table class="table table-striped table-hover align-middle mb-0">
+                <thead class="table-light">
+                    <tr>
+                        <th>Id</th>
+                        <th>Name</th>
+                      
+                        <th>Details</th>
+                        <th>Edit</th>
+                        <th>Delete</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td data-label="Id" class="text-truncate" style="max-width:120px;">@item.Id</td>
+                            <td data-label="Name" class="text-truncate" style="max-width:220px;">
+                                <div class="d-inline-block text-truncate" style="max-width:220px;">@item.Name</div>
+                            </td>
+                         
+
+      
+                            <partial name="PartialBtnView" model="@item.Id" />
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+    else
+    {
+        <div class="card shadow-lg border-0 text-center py-5 mx-0">
+            <div class="card-body">
+                <i class="fas fa-book-open text-primary mb-3" style="font-size: 3rem;"></i>
+                <p class="text-muted mb-3 fs-6">No Roles available</p>
+                <a class="btn btn-primary text-capitalize px-4 py-2" asp-action="Create">
+                    <i class="fas fa-user me-1"></i> Add new Role
+                </a>
+            </div>
+        </div>
+    }
+</div>
+
+

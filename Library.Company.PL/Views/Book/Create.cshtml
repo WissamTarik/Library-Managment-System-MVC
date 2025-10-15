@@ -12,27 +12,10 @@
                 </div>
                 <div class="card-body">
                     <form asp-action="Create">
-                        <div class="mb-3 form-floating">
-                           <input class="form-control" asp-for="ISBN" placeholder=""/>
-                           <label class="form-label" asp-for="ISBN"></label>
-                           <span asp-validation-for="ISBN" class="text-danger"></span>
-                           
-                        </div>
 
-                        <div class="mb-3 form-floating">
-                           <input class="form-control" asp-for="Title" placeholder=""/>
-                           <label asp-for="Title" class="form-label"></label>
-                           <span asp-validation-for="Title" class="text-danger"></span>
-                        </div>
 
-                        <div class="mb-3 form-floating">
-                           <input class="form-control" asp-for="PublishedYear" placeholder=""/>
-                           <label asp-for="PublishedYear" class="form-label"></label>
-                            <span asp-validation-for="PublishedYear" class="text-danger"></span>
-                        </div>
 
-                       
-
+                        <partial name="BookPartialViews/CreateAndEditPartialView" />
                         <div class="d-grid">
                             <button type="submit" class="btn btn-success">Add</button>
                             <a asp-action="Index" class="btn btn-outline-secondary mt-2">Return to Book List</a>
@@ -44,4 +27,6 @@
     </div>
 </div>
 
-
+@section Validation {
+    <partial name="_ValidationScriptsPartial" />
+}

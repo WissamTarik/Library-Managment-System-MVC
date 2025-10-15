@@ -1,6 +1,9 @@
 using Library.Company.BLL.Interfaces;
 using Library.Company.BLL.Repositories;
 using Library.Company.DAL.Data.Contexts;
+using Library.Company.DAL.Models;
+using Library.Company.PL.Mapping;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 namespace Library.Company.PL
@@ -16,9 +19,30 @@ namespace Library.Company.PL
             builder.Services.AddScoped<IBookRepository, BookRepository>();
             builder.Services.AddScoped<IAuthorRepository,AuthorRepository>();
             builder.Services.AddScoped<ICategoryRepository,CategoryRepository>();
+            builder.Services.AddScoped<IUnitOfWork,UnitOfWork>();
+
+
+            builder.Services.AddAutoMapper(M => M.AddProfile(new BookProfile()));
+            builder.Services.AddAutoMapper(M => M.AddProfile(new AuthorProfile()));
+            builder.Services.AddAutoMapper(M => M.AddProfile(new UserProfile()));
+            builder.Services.AddAutoMapper(M => M.AddProfile(new UserToReturnProfile()));
+
+
             builder.Services.AddDbContext<LibraryDbContext>(options =>
             {
               options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
+            });
+
+
+            builder.Services.AddIdentity<AppUser, IdentityRole>()
+                            .AddEntityFrameworkStores<LibraryDbContext>()
+                            .AddDefaultTokenProviders();
+
+
+
+            builder.Services.ConfigureApplicationCookie(config =>
+            {
+                config.LoginPath = "/Account/SignIn";
             });
             var app = builder.Build();
 
@@ -35,6 +59,7 @@ namespace Library.Company.PL
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.MapControllerRoute(

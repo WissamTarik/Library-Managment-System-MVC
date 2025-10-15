@@ -1,0 +1,88 @@
+﻿@model IEnumerable<Category>
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="w-75 mx-auto">
+        <!-- Page Header -->
+    <div class="text-center mb-4">
+        <h1 class="fw-bold">
+            <i class="fas fa-folder-tree me-2 text-success"></i>Categories
+        </h1>
+    </div>   
+    <!-- Page Header -->
+    <div class="row mb-3 align-items-center g-2">
+        <!-- Search -->
+        <div class="col-12 col-md-8">
+            <form asp-action="Index" class="d-flex">
+                <div class="input-group w-75">
+                    <input type="search" name="SearchInput" class="form-control" placeholder="Search by name..." />
+                    <button class="btn btn-secondary" type="submit">
+                        <i class="fas fa-search me-1"></i> Search
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        <!-- Add button -->
+        <div class="col-12 col-md-4 text-start text-md-end">
+            <a class="btn btn-primary w-75 w-md-auto" asp-action="Create">
+                <i class="fas fa-plus me-1"></i> Add new Category
+            </a>
+        </div>
+    </div>
+
+    <div>
+        @if (!string.IsNullOrEmpty(TempData["Message"] as string))
+        {
+            <div class="alert alert-success  alert-dismissible">
+                <p> @TempData["Message"]</p>
+                <button class=" btn btn-close" data-bs-dismiss="alert"></button>
+            </div>
+        }
+        @if (Model.Count() > 0)
+        {
+            <table class=" text-center table table-dark table-hover table-striped table-responsive table-bordered">
+                <thead class="table-light text-center">
+                    <tr>
+                        <th>Category Name</th>
+                     
+                        <th>Details</th>
+                        <th>Edit</th>
+                        <th>Delete</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                           
+                            <td>@item.Name</td>
+
+
+                            <partial name="PartialBtnView" model="@item.Id.ToString()" />
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+        else
+        {
+            <div class="card  shadow py-5 shadow-lg border-primary-subtle">
+                <div class="card-body text-center">
+
+                    <i class="fas fa-book-open  bookIcon  text-primary"></i>
+                    <p class="text-muted mt-3 ">No Categories Available</p>
+                    <a class="btn btn-primary text-capitalize col-6 mt-2 py-2" asp-action="Create">
+                        <i class="fas fa-plus"></i>
+                        add new category
+                    </a>
+                </div>
+            </div>
+        }
+
+    </div>
+</div>
+

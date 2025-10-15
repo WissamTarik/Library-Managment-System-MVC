@@ -1,0 +1,30 @@
+﻿@model string
+<td>
+    <a class="btn btn-success" asp-action="Details" asp-route-id="@Model">Details</a>
+</td>
+<td>
+
+    <a class="btn btn-light" asp-action="Edit" asp-route-id="@Model">Edit</a>
+</td>
+<td>
+
+    <a class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal">Delete</a>
+</td>
+
+<div class="modal fade" id="deleteModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header bg-danger text-white">
+                <h5 class="modal-title">Confirm Delete</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                Are you sure to Delete Employee ?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <a asp-action="Delete" asp-route-id="@Model" class="btn btn-danger">Yes, Delete</a>
+            </div>
+        </div>
+    </div>
+</div>

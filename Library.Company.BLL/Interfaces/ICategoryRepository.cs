@@ -7,13 +7,8 @@ using System.Threading.Tasks;
 
 namespace Library.Company.BLL.Interfaces
 {
-    public interface ICategoryRepository
+    public interface ICategoryRepository:IGenericRepository<Category>
     {
-        IEnumerable<Category> GetAll();
-        Category? GetById(int id);
-
-        int Add(Category model);
-        int Update(Category model);
-        int Delete(Category model);
+        Task<IEnumerable<Category>>? GetByNameAsync(string name);
     }
 }

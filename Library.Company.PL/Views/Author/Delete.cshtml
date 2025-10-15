@@ -1,0 +1,90 @@
+﻿
+@model AuthorDto
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<h1>Delete Author</h1>
+
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-6">
+            <div class="card shadow-lg border-0 rounded-3">
+                <div class="card-header bg-dark text-white text-center justify-content-center d-flex g-2 align-items-center">
+                    <h4>@Model.Name Delete</h4>
+                    @if (Model.ImageName is not null)
+                    {
+                        <img src="~/files/images/@Model.ImageName" alt="@Model.Name" width="80px" class="rounded-circle ms-3" />
+                    }
+                </div>
+                <div class="card-body">
+                  <form asp-action="Delete" enctype="multipart/form-data">
+                      <input hidden asp-for="ImageName"/>
+                        <partial name="AuthorPartialView/DetailsAndDeletePartialView" />
+
+
+                        <div class="d-grid">
+                            <button class="btn btn-danger" type="button" data-bs-toggle="modal" data-bs-target="#deleteModal">
+                                Delete
+                                <i class="fas fa-trash ms-2"></i>
+
+                            </button>
+                            <a asp-action="Index" class="btn btn-outline-secondary mt-2" >
+                                Return to Author List
+
+                                <i class="fas fa-arrow-right ms-2"></i>
+                            </a>
+                            </div>
+                            <div class="modal fade" id="deleteModal" tabindex="-1" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered">
+                                    <div class="modal-content">
+                                        <div class="modal-header bg-danger text-white">
+                                            <h5 class="modal-title">Confirm Delete</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            Are you sure to Delete Employee @Model.Name?
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                            <button type="submit" class="btn btn-danger">Yes, Delete</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                  </form>
+                    </div>
+                @if (Model.Books.Count() > 0)
+                {
+                    <table class=" text-center table table-info table-hover table-striped table-responsive table-bordered">
+                        <thead class="table-light text-center">
+                            <tr>
+                                <th>ISBN</th>
+                                <th>Title</th>
+                                <th>PublishedYear</th>
+
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.Books)
+                            {
+                                <tr>
+                                    <td>@item.ISBN</td>
+                                    <td>@item.Title</td>
+                                    <td>@item.PublishedYear</td>
+
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                }
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+

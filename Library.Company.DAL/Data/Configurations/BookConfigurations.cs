@@ -16,6 +16,16 @@ namespace Library.Company.DAL.Data.Configurations
             builder.Property(b => b.Id).UseIdentityColumn(10, 10);
             builder.Property(b => b.ISBN).IsRequired();
             builder.Property(b => b.Title).HasMaxLength(100);
+           
+            builder.HasOne(b => b.Author)
+                   .WithMany(a => a.Books)
+                   .HasForeignKey(b => b.AuthorId)
+                    .OnDelete(DeleteBehavior.SetNull);
+
+            builder.HasOne(b => b.Category)
+                   .WithMany(c => c.Books)
+                   .HasForeignKey(b => b.CategoryId)
+                   .OnDelete(DeleteBehavior.SetNull);
         }
     }
 }

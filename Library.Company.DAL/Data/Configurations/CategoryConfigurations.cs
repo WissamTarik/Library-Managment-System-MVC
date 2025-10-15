@@ -14,6 +14,9 @@ namespace Library.Company.DAL.Data.Configurations
         public void Configure(EntityTypeBuilder<Category> builder)
         {
             builder.Property(c => c.Name).HasColumnName("CatName").HasMaxLength(50);
+       
+              
+        
         }
     }
 }

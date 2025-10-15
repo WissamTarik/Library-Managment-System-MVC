@@ -1,0 +1,16 @@
+﻿using System.ComponentModel;
+
+namespace Library.Company.PL.Dtos
+{
+    public class UserToReturnDto
+    {
+        public string Id { get; set; }
+        public string UserName { get; set; }
+        [DisplayName("First Name")]
+        public string FirstName { get; set; }
+        [DisplayName("Last Name")]
+        public string LastName { get; set; }
+        public string Email { get; set; }
+        public IEnumerable<string>? Roles { get; set; }
+    }
+}

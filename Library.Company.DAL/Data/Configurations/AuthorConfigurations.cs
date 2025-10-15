@@ -15,6 +15,7 @@ namespace Library.Company.DAL.Data.Configurations
         {
             builder.Property(a => a.Id).UseIdentityColumn(100, 100);
            builder.Property(a=>a.Name).HasColumnName("Author_Name").IsRequired();
+           
         }
     }
 }
